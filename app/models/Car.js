@@ -14,6 +14,7 @@ export class Car {
     this.creatorId = data.creatorId
     this.createdAt = new Date(data.createdAt)
     this.updatedAt = new Date(data.updatedAt)
+    // NOTE creator is an object keeping track of the details of who created this car. Has an id, name, and picture
     this.creator = data.creator
   }
 
@@ -46,12 +47,15 @@ export class Car {
   }
 
   get ComputeDeleteButton() {
+    // NOTE if the user isn't logged in OR if the logged in user did not create this car
     if (!AppState.account || AppState.account.id != this.creatorId) {
       return ''
     }
+
     return `<button onclick="app.CarsController.deleteCar('${this.id}')" class="btn btn-danger">Delete Car</button>`
   }
   get ComputeEditButton() {
+    // NOTE if the user isn't logged in OR if the logged in user did not create this car
     if (!AppState.account || AppState.account.id != this.creatorId) {
       return ''
     }
@@ -59,6 +63,7 @@ export class Car {
   }
 
   get EditForm() {
+    // NOTE pulls the properties from this class and sets them to the values of each input field, so that the user does not have to re-fill in the entire form when performing an edit
     return `
     <div class="card card-body">
       <form onsubmit="app.CarsController.editCar(event, '${this.id}')">
@@ -108,6 +113,9 @@ export class Car {
     `
   }
 
+  // NOTE static methods only exist on a non-built out version of the Car class.
+  // NOTE ❌ new Car().CreateForm
+  // NOTE ✅ Car.CreateForm
   static get CreateForm() {
     return `
     <form onsubmit="app.CarsController.createCar(event)">
@@ -157,6 +165,8 @@ export class Car {
 }
 
 
+
+// NOTE we pull this from the console to make it easier to see what our data looks like and build out our class
 // let carData = {
 //   "_id": "6462ed1266d4560e6cfa0f39",
 //   "id": "6462ed1266d4560e6cfa0f39",

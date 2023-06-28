@@ -1,14 +1,19 @@
 import { baseURL } from '../env.js';
 import { logger } from '../utils/Logger.js';
 
+// NOTE default axios instance. Used in other parts of our application, so renaming can break things. Create a new instance of axios if you need to talk to a different api
 // @ts-ignore
 // eslint-disable-next-line no-undef
 export const api = axios.create({
+  // NOTE brought in from our env.js
   baseURL: baseURL,
   timeout: 8000,
   withCredentials: true
 })
 
+
+
+// REVIEW black magic do not touch
 api.interceptors.request.use(config => config, handleAxiosError)
 api.interceptors.response.use(response => response, handleAxiosError)
 
